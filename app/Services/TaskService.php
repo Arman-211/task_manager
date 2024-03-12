@@ -23,12 +23,12 @@ class TaskService implements TaskServiceInterface
     }
 
     /**
-     * @param array $filters
+     * @param string|null $status
      * @return Collection
      */
-    public function getAllTasks(array $filters): Collection
+    public function getAllTasks(?string $status): Collection
     {
-        return $this->readRepository->getAll($filters);
+        return $this->readRepository->getAll($status);
     }
 
     /**

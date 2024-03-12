@@ -10,10 +10,10 @@ interface TaskServiceInterface
     /**
      * Get all tasks based on filters.
      *
-     * @param array $filters
+     * @param string|null $status
      * @return Collection
      */
-    public function getAllTasks(array $filters): Collection;
+    public function getAllTasks(?string $status): Collection;
 
     /**
      * Create a new task.

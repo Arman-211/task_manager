@@ -12,18 +12,15 @@ class TaskReadRepository implements TaskReadRepositoryInterface
     /**
      * Get all tasks based on filters.
      *
-     * @param array $filters
+     * @param string|null $status
      * @return Collection
      */
-    public function getAll(array $filters): Collection
+    public function getAll(?string $status): Collection
     {
-        $query = Task::query();
-        if (isset($filters['status'])) {
-            $status = $filters['status'];
-            if (in_array($status, [TaskStatus::TODO, TaskStatus::IN_PROGRESS, TaskStatus::DONE])) {
-                $query->where('status', $status);
-            }
-        }
+        $query = Task::query()
+            ->when($status, function ($query) use ($status) {
+                $query->where('status', TaskStatus::valueOf($status));
+            });
 
         if (isset($filters['date'])) {
             $date = $filters['date'];

@@ -10,10 +10,10 @@ interface TaskReadRepositoryInterface
     /**
      * Get all tasks based on filters.
      *
-     * @param array $filters
+     * @param string|null $status
      * @return Collection
      */
-    public function getAll(array $filters): Collection;
+    public function getAll(?string $status): Collection;
 
     /**
      * Get a task by ID.

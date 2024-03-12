@@ -1,0 +1,29 @@
+# Игнорировать файлы .env и .env.example
+.env
+.env.example
+
+# Игнорировать папку .idea
+.idea/
+
+# Игнорировать сгенерированные файлы bootstrap/cache
+bootstrap/cache/
+
+# Игнорировать сгенерированные файлы storage
+storage/
+
+# Игнорировать сгенерированные файлы composer.lock
+composer.lock
+
+# Игнорировать папку node_modules в корне проекта и в папке task-manager
+node_modules/
+task-manager/node_modules/
+
+# Игнорировать папку vendor в корне проекта
+vendor/
+
+# Игнорировать сгенерированный файл main.css в папке task-manager/src/assets
+task-manager/src/assets/main.css
+
+# Игнорировать собственные файлы в папке app/Http/Requests и task-manager/src/services
+app/Http/Requests/
+task-manager/src/services/

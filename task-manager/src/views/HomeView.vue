@@ -14,32 +14,3 @@ export default {
     name: 'HomeView',
 }
 </script>
-
-<style scoped>
-.home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f3f4f6;
-}
-
-.container {
-    text-align: center;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-}
-
-.title {
-    font-size: 2.5rem;
-    margin-top: 1rem;
-}
-
-.description {
-    font-size: 1.2rem;
-    color: #6b7280;
-}
-</style>

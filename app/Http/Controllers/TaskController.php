@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Services\TaskServiceInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +14,7 @@ class TaskController extends Controller
     protected TaskServiceInterface $taskService;
 
     /**
+     * TaskController constructor.
      * @param TaskServiceInterface $taskService
      */
     public function __construct(TaskServiceInterface $taskService)
@@ -20,35 +23,36 @@ class TaskController extends Controller
     }
 
     /**
+     * Get all tasks.
      * @param Request $request
      * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
-        $filters = [
-            'status' => $request->input('status'),
-            'date' => $request->input('date')
-        ];
-
-        $tasks = $this->taskService->getAllTasks($filters);
-
+        $tasks = $this->taskService->getAllTasks($request->get('status'));
         return response()->json($tasks);
     }
 
     /**
-     * @param Request $request
+     * Create a new task.
+     * @param CreateRequest $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(CreateRequest $request): JsonResponse
     {
         try {
             $task = $this->taskService->createTask($request->all());
             return response()->json($task, 201);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return $this->handleException($e);
         }
     }
 
+    /**
+     * Get a single task by ID.
+     * @param int $taskId
+     * @return JsonResponse
+     */
     public function show(int $taskId): JsonResponse
     {
         $task = $this->taskService->getTaskById($taskId);
@@ -61,11 +65,12 @@ class TaskController extends Controller
     }
 
     /**
-     * @param Request $request
+     * Update an existing task.
+     * @param UpdateRequest $request
      * @param int $taskId
      * @return JsonResponse
      */
-    public function update(Request $request, int $taskId): JsonResponse
+    public function update(UpdateRequest $request, int $taskId): JsonResponse
     {
         $task = $this->taskService->getTaskById($taskId);
 
@@ -77,11 +82,12 @@ class TaskController extends Controller
             $task = $this->taskService->updateTask($task, $request->all());
             return response()->json($task);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return $this->handleException($e);
         }
     }
 
     /**
+     * Delete a task by ID.
      * @param int $taskId
      * @return JsonResponse
      */
@@ -97,7 +103,17 @@ class TaskController extends Controller
             $this->taskService->deleteTask($task);
             return response()->json(null, 204);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return $this->handleException($e);
         }
+    }
+
+    /**
+     * Handle exceptions.
+     * @param Exception $e
+     * @return JsonResponse
+     */
+    protected function handleException(Exception $e): JsonResponse
+    {
+        return response()->json(['error' => $e->getMessage()], 500);
     }
 }
