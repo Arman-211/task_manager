@@ -9,7 +9,6 @@ class TaskStatus
     const TODO = 'Todo';
     const IN_PROGRESS = 'InProgress';
     const DONE = 'Done';
-    const ALL = 'All';
 
     /**
      * @param string $status
@@ -17,7 +16,7 @@ class TaskStatus
      */
     public static function valueOf(string $status): string
     {
-        if (!in_array($status, [self::TODO, self::IN_PROGRESS, self::DONE, self::ALL])) {
+        if (!in_array($status, [self::TODO, self::IN_PROGRESS, self::DONE])) {
             throw new InvalidArgumentException("Invalid task status: {$status}");
         }
 
