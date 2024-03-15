@@ -8,7 +8,7 @@
         <button class="btn btn-success" @click="openCreatePopup()">Создать задачу</button>
       </div>
     </div>
-    <h2>Список задач</h2>
+    <h2 class="list_task_title">Список задач</h2>
     <div class="status-filter">
       <label for="status">Фильтр по статусу:</label>
       <select id="status" v-model="selectedStatus" @change="filterTasks">
@@ -18,7 +18,7 @@
         <option value="Done">Done</option>
       </select>
     </div>
-    <table class="task-table">
+    <table>
       <thead>
       <tr>
         <th>Название</th>
@@ -29,6 +29,9 @@
       </tr>
       </thead>
       <tbody>
+      <tr v-if="isTasksEmpty">
+        <td colspan="5">No tasks found.</td>
+      </tr>
       <tr v-for="task in filteredTasks" :key="task.id" class="task-item">
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
@@ -197,6 +200,9 @@ export default {
   computed: {
     filteredTasks() {
       return this.tasks;
+    },
+    isTasksEmpty() {
+      return !this.tasks || this.tasks.length === 0;
     }
   }
 };

@@ -11,7 +11,7 @@
                     <option value="Done">Done</option>
                 </select>
             </div>
-            <button @click="createTask" class="btn btn-primary">Создать задачу</button>
+            <button @click="createTask" class="btn btn-success">Создать задачу</button>
             <button @click="cancelCreate" class="btn btn-secondary">Отмена</button>
         </div>
     </div>
